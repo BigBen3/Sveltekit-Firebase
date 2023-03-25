@@ -8,9 +8,10 @@
 <div class="auth-container">
     <form>
         <h1>Login</h1>
-        <!--if email exist then it is above else it will be center-->
-        <p class={email ? " above" : " center"}>Email</p>
+
         <label>
+            <!--if email exist then it is above else it will be center-->
+            <p class={email ? " above" : " center"}>Email</p>
             <input bind:value={email} type="email" placeholder="Email" />
         </label>
         <label>
@@ -92,5 +93,22 @@
         pointer-events: none;
         color: white;
         border-radius: 4px;
+        padding: 0 6px;
+        font-size: 0.8rem;
+    }
+
+    .above {
+        top: 0;
+        left: 24px;
+        background: navy;
+        border: 1px  solid blue;
+        font-size: 0.7rem;
+    }
+
+    .center {
+        top: 50%;
+        left: 6px;
+        border: 1px solid transparent;
+        opacity:  0;
     }
 </style>
