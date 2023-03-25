@@ -9,16 +9,18 @@
     <form>
         <h1>Login</h1>
         <!--if email exist then it is above else it will be center-->
-        <p>class={email ? 'above' : 'center'}</p>
+        <p class={email ? " above" : " center"}>Email</p>
         <label>
             <input bind:value={email} type="email" placeholder="Email" />
         </label>
         <label>
-            <p>class={email ? 'above' : 'center'}</p>
+            <p class={password ? " above" : " center"}>Password</p>
             <input bind:value={password} type="password" placeholder="Password" />
         </label>
         <label>
-            <p>class={email ? 'above' : 'center'}</p>
+            <p class={confirmPass ? " above" : " center"}>
+                Confirm Password
+            </p>
             <input bind:value={confirmPass} type="password" placeholder="Confirm Password" />
         </label>
         <button type="button">Submit</button>
