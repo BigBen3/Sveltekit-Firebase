@@ -2,13 +2,25 @@
     let email = "";
     let password = "";
     let  confirmPass = "";
+    let error = false;
+    let register = false;
+    
 
+    const handleAuthenticate = () => {
+        if(!email || !password || (register && !confirmPass ) ){
+            error = true;
+            return;
+        }
+    }
 </script>
 
 <div class="auth-container">
     <form>
-        <h1>Login</h1>
-
+        <!--if reigester true make it say register else make it say login -->
+        <h1>{register ? "Register" : "Login"}</h1>
+        {#if error}
+        <p class="error">The information you have entered is not correct</p>
+        {/if}
         <label>
             <!--if email exist then it is above else it will be center-->
             <p class={email ? " above" : " center"}>Email</p>
@@ -25,6 +37,20 @@
             <input bind:value={confirmPass} type="password" placeholder="Confirm Password" />
         </label>
         <button type="button">Submit</button>
+        <div class="options"> 
+            <p>Or</p>
+            {#if register}
+                <div>
+                    <p>Already have an account?</p>
+                    <p>Login</p>
+                </div>
+            {:else}
+            <div>
+                <p>Don't have an account?</p>
+                <p>Register</p>
+            </div>
+            {/if}
+        </div>
     </form>
 </div>
 
@@ -73,6 +99,9 @@
         outline: none;
     }
 
+    form label:focus-within {
+        border-color: blue;
+    }
     form button {
         background:navy;
         color: white;
@@ -86,10 +115,11 @@
     form button:hover {
         background: blue;
     }
+
     .above, 
     .center{
         position: absolute;
-        transform: f translateY(-50%);
+        transform: translateY(-50%);
         pointer-events: none;
         color: white;
         border-radius: 4px;
@@ -111,4 +141,37 @@
         border: 1px solid transparent;
         opacity:  0;
     }
+    
+    .error {
+        color: coral;
+        font-size: 0.9rem;
+    }
+
+    .options {
+        padding: 14px 0;
+    
+    }
+        /* 
+        this makes it the first paragraph in the options div
+        */
+     .options > p {
+        position: relative;
+     }
+
+     .options > p::after,
+     .options > p::before {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 100px;
+        height: 1.5px;
+        background: white;
+     }
+
+     .options > p::after {
+        right: 100%;
+     }
+
+     
 </style>
