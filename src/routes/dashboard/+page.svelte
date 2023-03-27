@@ -13,6 +13,7 @@
         currTodo = "";
     }
    
+    // @ts-ignore
     const editTodo = (index) => {
        
         //make sure you fully understand this I don't right now 
@@ -26,6 +27,7 @@
         todoList = newTodoList;
     }
 
+    // @ts-ignore
     const removeTodo = (index) => {
   //make sure you fully understand this I don't right now 
         
