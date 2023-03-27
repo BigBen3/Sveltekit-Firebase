@@ -12,23 +12,30 @@
         todoList = [...todoList, currTodo];
         currTodo = "";
     }
-   /*
-
+   
     const editTodo = (index) => {
        
+        //make sure you fully understand this I don't right now 
 
         //if they are not equal add them to the list if they are remove it from the list 
-        let newTodoList = todoList.filter(val,  i) => {
+        let newTodoList = todoList.filter((val,  i) => {
             return i !== index;
-        }
-        currTodo = todoList(index);
+        })
+        //oh I think it is with the binding since bindings is two ways since you set the binding here it now appears in the input 
+        currTodo = todoList[index];
         todoList = newTodoList;
     }
 
     const removeTodo = (index) => {
-
+  //make sure you fully understand this I don't right now 
+        
+        //if they are not equal add them to the list if they are remove it from the list 
+        let newTodoList = todoList.filter((val,  i) => {
+            return i !== index;
+        })
+        todoList = newTodoList;
     }
-    */
+  
 </script>
 
 
@@ -44,8 +51,17 @@
                     {index+1}. {todo} 
                 </p>
                 <div class="actions">
-                    <i class="fa-solid fa-pen"></i>
-                    <i class="fa-solid fa-trash-can"></i>
+                    <i on:click={() => {
+                        editTodo(index)
+                    }}
+                    on:keydown={() => {}}
+                    class="fa-solid fa-pen"></i>
+                    <i  on:click={() => {
+                        removeTodo(index)
+                    }}
+                    on:keydown={() => {}}
+                    
+                    class="fa-solid fa-trash-can"></i>
                 </div>
                
             </div>
