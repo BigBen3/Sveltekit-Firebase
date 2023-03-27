@@ -1,16 +1,34 @@
 <script>
     let todoList = ['Do the groceries'];
     let currTodo = '';
-    let error =  true;
-    
+    let error =  false;
+   
 
-    const addToto = () => {
+    const addTodo = () => {
         error = false;
         if(!currTodo){
             error = true;
         }
-        todoList.push(currTodo);
+        todoList = [...todoList, currTodo];
+        currTodo = "";
     }
+   /*
+
+    const editTodo = (index) => {
+       
+
+        //if they are not equal add them to the list if they are remove it from the list 
+        let newTodoList = todoList.filter(val,  i) => {
+            return i !== index;
+        }
+        currTodo = todoList(index);
+        todoList = newTodoList;
+    }
+
+    const removeTodo = (index) => {
+
+    }
+    */
 </script>
 
 
@@ -22,14 +40,21 @@
     <main>
        {#each todoList as todo, index }
             <div class="todo">
-                {index+1}. {todo} 
+                <p>
+                    {index+1}. {todo} 
+                </p>
+                <div class="actions">
+                    <i class="fa-solid fa-pen"></i>
+                    <i class="fa-solid fa-trash-can"></i>
+                </div>
+               
             </div>
          
        {/each}
     </main>
-    <div class="enterTodo">
+    <div class={"enterTodo " + (error ? "errorBorder" : "")}>
         <input bind:value={currTodo} type="text" placeholder="Enter todo"/>
-        <button>ADD</button>
+        <button on:click={addTodo}>ADD</button>
     </div>
 </div>
 
@@ -76,6 +101,31 @@
         gap: 8px;
         flex: 1;
     }
+
+    .todo {
+        border-left: 1px solid cyan;
+        padding:8px; 
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 1.3rem;
+    }
+    .actions i {
+        cursor:pointer;
+    }
+    .actions i:hover {
+        color: coral;
+    }
+    .errorBorder {
+        border-color: coral !important;
+    }
+
     .enterTodo {
         display: flex;
         align-items: stretch;
@@ -105,5 +155,7 @@
     .enterTodo button:hover {
         background: transparent;
     }
+
+  
    
 </style>
