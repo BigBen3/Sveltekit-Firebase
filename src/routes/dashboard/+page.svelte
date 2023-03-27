@@ -44,9 +44,16 @@
 <div class="mainContainer">
     <div class="headerContainer">
         <h1>Todo List</h1>
-        <button><i class="fa-regular fa-floppy-disk"></i><p>Save</p></button>
+        <div class="headerBtns">
+            <button><i class="fa-regular fa-floppy-disk"></i><p>Save</p></button>
+            <button><i class="fa-solid fa-right-from-bracket" /><p>Logout</p></button>
+        </div>
+    
     </div>
     <main>
+        {#if todoList.length === 0}
+            <p>You have nothing to do !</p>
+        {/if}
        {#each todoList as todo, index }
             <div class="todo">
                 <p>
@@ -70,6 +77,7 @@
          
        {/each}
     </main>
+    <!--if the error is true make it errorBorder else make add emtpy string I think-->
     <div class={"enterTodo " + (error ? "errorBorder" : "")}>
         <input bind:value={currTodo} type="text" placeholder="Enter todo"/>
         <button on:click={addTodo}>ADD</button>
@@ -91,7 +99,12 @@
         justify-content: space-between;
     }
     
-  
+    .headerBtns {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    
     .headerContainer button {
         background: #003c5b;
         color: white;
