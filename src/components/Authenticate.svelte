@@ -9,6 +9,9 @@
     let authenticating = false;
 
     const handleAuthenticate = async () => {
+        if(authenticating ) { 
+            return; 
+        }
         authenticating = true;
         if(!email || !password || (register && !confirmPass ) ){
             error = true;
@@ -17,12 +20,12 @@
 
         try {
             if(!register) {
-           await authHandlers.login(email, password);
+                await authHandlers.login(email, password);
 
         }
-        else{
-            await authHandlers.signup(email,password);
-        }
+            else{
+                await authHandlers.signup(email,password);
+            }
         }catch(err)
         {
             console.log("auth  error", err)
@@ -63,7 +66,7 @@
             <input bind:value={confirmPass} type="password" placeholder="Confirm Password" />
         </label>
         {/if}
-        <button type="button" class="submit">
+        <button on:click={handleAuthenticate} type="button" class="submit">
             {#if authenticating}
             <i class="fa-solid fa-spinner spin" />
             {:else}
