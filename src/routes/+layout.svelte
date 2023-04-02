@@ -36,6 +36,7 @@ By following this process, the application ensures that the user's data is prope
         //This will let you unscribe from the onAuthStateChanged when you don't need it anymore 
         //like when you get of this componenet you won't need to listen to auth changes. 
         const unsusbribe = auth.onAuthStateChanged(async user => {
+            //gets the url of the tab your own. 
             const currentPath = window.location.pathname;
 
             // @ts-ignore
@@ -59,9 +60,10 @@ By following this process, the application ensures that the user's data is prope
 
             //this is to catch any edge cases
             //so just in case the last two if statements messed something this will stop the user from going to code that needs them to be logged in. 
+            //if you are on the right page but not logged in we don't want to go to the firebase logic 
             if(!user){
                 return;
-            }
+            } 
                 //Firebase database has collections
                 //Collections represent types of data
                 //Example: Users and Posts
@@ -92,11 +94,19 @@ By following this process, the application ensures that the user's data is prope
                 //We check if the snapshot of the reference exits since the represents that data. 
                 if(!docSnap.exists()) {
                     //if the docSnap doesnt exist create a new doc for the user in the users collection
+                    //creates another variable same as docRef 
+                    //Don't know why but they represent the same thing 
                     const userRef = doc(db, 'users', user.uid);  
+                    //assings the data to a js object
                     dataToSetToStore = {
                         email: user.email,  
                         todos: [],
                     }
+                    //merge that js object with the data in the database 
+                    //the set doc creates the doc based off the reference
+                    //you don't need to merge becuase there is no data
+                    // you could not have it and it would completey ovverwrite everythign
+                    //but since there is nothing it doesn't matter; 
                     await setDoc(
                         userRef,  dataToSetToStore, { merge: true}
                     );
@@ -104,11 +114,15 @@ By following this process, the application ensures that the user's data is prope
                 else {
                     //this gets the data from the snapShot
                     const userData = docSnap.data()
+                    //sets that data equal to the js object. 
                     dataToSetStore = userData;
                 }
-
+                //this updates the sveltestore not the database
+                //the curr represents the current object in the store
+                // we pass the curr in and spread its values 
                 authStore.update(curr => {
                     return {
+                        //creates a new curr object with the updated user data
                         ...curr,
                         user,
                         data: dataToSetStore,
