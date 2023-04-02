@@ -81,14 +81,18 @@ By following this process, the application ensures that the user's data is prope
                 let dataToSetStore
                 //so this code gets the the user doc for the user based on their uid in the user collection and sets it equal to this variable 
                 //doesn't actual get the data in the doc just gets the doc that contains the data. Like a reference to it 
+                //So a reference to a docuement is just where the documenet is going to be it does not actual mean that the documenet is there. 
+                //The reference could be refereing to nothing. 
                 const docRef = doc(db, 'users', user.uid)
+                //This is all of the documenet exists. 
                 //this the gets a snapshot of the documenet when this method is called so how it looked like. not the actual data
                 //if you wanted to get the data then you would do .data 
                 const docSnap = await getDoc(docRef)
-                //if there is 
+                //since a reference to the documenet doesn't mean that docuemnet actually exists.
+                //We check if the snapshot of the reference exits since the represents that data. 
                 if(!docSnap.exists()) {
-                    //if the docSnap doesnt exist create a new doc for the user
-                    const userRef = doc(db, 'user', user.uid);  
+                    //if the docSnap doesnt exist create a new doc for the user in the users collection
+                    const userRef = doc(db, 'users', user.uid);  
                     dataToSetToStore = {
                         email: user.email,  
                         todos: [],
@@ -98,6 +102,7 @@ By following this process, the application ensures that the user's data is prope
                     );
                 }
                 else {
+                    //this gets the data from the snapShot
                     const userData = docSnap.data()
                     dataToSetStore = userData;
                 }
