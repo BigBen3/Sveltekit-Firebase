@@ -7,17 +7,20 @@
     let error = false;
     let register = false;
     let authenticating = false;
+    let passError = false; 
     //check if you are checking if the pass and confirm pass works 
     const handleAuthenticate = async () => {
         if(authenticating ) { 
             return; 
         }
       
-        if (!email || !password || (register && (!confirmPass || password !== confirmPass))) {
-                error = true;
-                return;
-  }
-       
+        if(!email || !password || (register && !confirmPass ) ){
+            error = true;
+            return;
+        }
+        if( password !== confirmPass) {
+            passError = true; 
+        }
         authenticating = true;
         try {
             if(!register) {
@@ -47,7 +50,7 @@
         <!--if reigester true make it say register else make it say login -->
         <h1>{register ? "Register" : "Login"}</h1>
         {#if error}
-             <p class="error">The information you have entered is not correct</p>
+             <p class="error">{passError ? "The passwords don't match" : "The information you have entered is not correct"}</p>
         {/if}
           
         <label>
@@ -181,6 +184,8 @@
             font-size: 0.9rem;
             text-align: center;
         }
+
+        
         .options {
             padding: 14px 0;
             overflow: hidden;
