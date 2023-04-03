@@ -9,6 +9,7 @@
     import  { getDoc, doc, setDoc} from 'firebase/firestore';
     import {authStore} from '../store/store'
     const nonAuthRoutes = ['/', 'product']
+    let dataToSetToStore;
     /* 
         how it is being done: 
         Here's a high-level overview of the process:
@@ -19,7 +20,7 @@ If the user is logged in, the function retrieves the user's data from the Fireba
 
 If the user's data does not exist in the database, the function creates a new document for the user and sets their email and todos array.
 
-If the user's data does exist in the database, the function retrieves the data and sets it to the dataToSetStore variable.
+If the user's data does exist in the database, the function retrieves the data and sets it to the dataToSetToStore  variable.
 
 Finally, the function updates the authStore object with the user's authentication state, data, and loading status.
 
@@ -80,7 +81,7 @@ By following this process, the application ensures that the user's data is prope
                     To actually read and use that data you use the .data method
                 */ 
 
-                let dataToSetStore
+               
                 //so this code gets the the user doc for the user based on their uid in the user collection and sets it equal to this variable 
                 //doesn't actual get the data in the doc just gets the doc that contains the data. Like a reference to it 
                 //So a reference to a docuement is just where the documenet is going to be it does not actual mean that the documenet is there. 
@@ -108,14 +109,14 @@ By following this process, the application ensures that the user's data is prope
                     // you could not have it and it would completey ovverwrite everythign
                     //but since there is nothing it doesn't matter; 
                     await setDoc(
-                        userRef,  dataToSetToStore, { merge: true}
+                        userRef, dataToSetToStore, { merge: true}
                     );
                 }
                 else {
                     //this gets the data from the snapShot
                     const userData = docSnap.data()
                     //sets that data equal to the js object. 
-                    dataToSetStore = userData;
+                    dataToSetToStore = userData;
                 }
                 //this updates the sveltestore not the database
                 //the curr represents the current object in the store
@@ -125,7 +126,7 @@ By following this process, the application ensures that the user's data is prope
                         //creates a new curr object with the updated user data
                         ...curr,
                         user,
-                        data: dataToSetStore,
+                        data:   dataToSetToStore,
                         loading: false,
                     };
                 })
