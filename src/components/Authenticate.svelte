@@ -13,10 +13,11 @@
             return; 
         }
       
-        if(!email || !password || (register && !confirmPass ) ){
-            error = true;
-            return;
-        }
+        if (!email || !password || (register && (!confirmPass || password !== confirmPass))) {
+                error = true;
+                return;
+  }
+       
         authenticating = true;
         try {
             if(!register) {
