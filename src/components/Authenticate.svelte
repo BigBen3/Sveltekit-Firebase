@@ -7,17 +7,17 @@
     let error = false;
     let register = false;
     let authenticating = false;
-
+    //check if you are checking if the pass and confirm pass works 
     const handleAuthenticate = async () => {
         if(authenticating ) { 
             return; 
         }
-        authenticating = true;
+      
         if(!email || !password || (register && !confirmPass ) ){
             error = true;
             return;
         }
-
+        authenticating = true;
         try {
             if(!register) {
                 await authHandlers.login(email, password);
