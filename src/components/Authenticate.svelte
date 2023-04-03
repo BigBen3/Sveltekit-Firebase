@@ -32,6 +32,7 @@
         {
             console.log("auth  error", err)
             error = true;
+            authenticating = false;
         }
        
     }

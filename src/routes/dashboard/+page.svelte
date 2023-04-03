@@ -2,6 +2,7 @@
   import { db } from "$lib/firebase/firebase";
   import { authHandlers, authStore } from "../../store/store";
   import  { getDoc, doc, setDoc, setIndexConfiguration} from 'firebase/firestore';
+  import TodoItem from "../../components/TodoItem.svelte";
 
     /**
    * @type {any[]}
@@ -80,25 +81,8 @@
             <p>You have nothing to do !</p>
         {/if}
        {#each todoList as todo, index }
-            <div class="todo">
-                <p>
-                    {index+1}. {todo} 
-                </p>
-                <div class="actions">
-                    <i on:click={() => {
-                        editTodo(index)
-                    }}
-                    on:keydown={() => {}}
-                    class="fa-solid fa-pen"></i>
-                    <i  on:click={() => {
-                        removeTodo(index)
-                    }}
-                    on:keydown={() => {}}
-                    
-                    class="fa-solid fa-trash-can"></i>
-                </div>
-               
-            </div>
+
+       <TodoItem {todo} {index} {removeTodo} {editTodo} />
          
        {/each}
     </main>
@@ -158,26 +142,7 @@
         flex: 1;
     }
 
-    .todo {
-        border-left: 1px solid cyan;
-        padding:8px; 
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .actions {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        font-size: 1.3rem;
-    }
-    .actions i {
-        cursor:pointer;
-    }
-    .actions i:hover {
-        color: coral;
-    }
+   
     .errorBorder {
         border-color: coral !important;
     }
