@@ -1,8 +1,16 @@
 <script>
-  import { authHandlers } from "../../store/store";
+  import { db } from "$lib/firebase/firebase";
+  import { authHandlers, authStore } from "../../store/store";
+  import  { getDoc, doc, setDoc, setIndexConfiguration} from 'firebase/firestore';
 
-
-    let todoList = ['Do the groceries'];
+    /**
+   * @type {any[]}
+   */
+    let todoList = [];
+    authStore.subscribe((curr) => {
+        // @ts-ignore
+        todoList = curr.data.todos;
+    });
     let currTodo = '';
     let error =  false;
    
@@ -40,15 +48,29 @@
         })
         todoList = newTodoList;
     }
-  
+    async function saveTodos() {
+        try {
+            // @ts-ignore
+            const userRef = doc(db, "users", $authStore.user.uid);
+            await setDoc(
+                userRef,
+                {
+                    todos: todoList,
+                },
+                { merge: true }
+            );
+        } catch (err) {
+            console.log("There was an error saving your information");
+        }
+    }
 </script>
-
+{#if  !$authStore.loading} 
 
 <div class="mainContainer">
     <div class="headerContainer">
         <h1>Todo List</h1>
         <div class="headerBtns">
-            <button><i class="fa-regular fa-floppy-disk"></i><p>Save</p></button>
+            <button on:click={saveTodos}><i class="fa-regular fa-floppy-disk"></i><p>Save</p></button>
             <button on:click={authHandlers.logout}><i class="fa-solid fa-right-from-bracket" /><p>Logout</p></button>
         </div>
     
@@ -86,7 +108,7 @@
         <button on:click={addTodo}>ADD</button>
     </div>
 </div>
-
+{/if}
 <style>
     .mainContainer {
         display: flex;
