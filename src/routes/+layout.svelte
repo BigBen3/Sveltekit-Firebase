@@ -4,7 +4,7 @@
 
 
     //we have this in the layout so all the pages inherit this
-    import {onMount}  from 'svelte';
+    import {onDestroy, onMount}  from 'svelte';
     import  {auth, db} from  '../lib/firebase/firebase';
     import  { getDoc, doc, setDoc} from 'firebase/firestore';
     import {authStore} from '../store/store'
@@ -112,6 +112,11 @@ By following this process, the application ensures that the user's data is prope
                         userRef, dataToSetToStore, { merge: true}
                     );
                 }
+                //meaning the doc already exists. 
+                //this is for a user logging in 
+                //it retreives the data 
+                //sets loading to false meaning the +page.svelte with load. 
+                //it seems like this part is for retriving the data of the existing user? 
                 else {
                     //this gets the data from the snapShot
                     const userData = docSnap.data()
@@ -134,7 +139,7 @@ By following this process, the application ensures that the user's data is prope
     }
 
     )
-
+  
 </script>
 
 

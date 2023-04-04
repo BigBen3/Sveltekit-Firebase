@@ -21,6 +21,12 @@
         if(!currTodo){
             error = true;
         }
+        /* 
+        For example, if todoList initially contained the elements 
+        ["task1", "task2", "task3"], and currTodo is "task4", 
+        the expression todoList = [...todoList, currTodo] 
+        would create a new array ["task1", "task2", "task3", "task4"] and assign it to the todoList variable.
+        */
         todoList = [...todoList, currTodo];
         currTodo = "";
     }
@@ -65,6 +71,7 @@
         }
     }
 </script>
+<!--this makes sure that it doesn't load anything until the loading is false for the authentication -->
 {#if  !$authStore.loading} 
 
 <div class="mainContainer">
@@ -88,6 +95,7 @@
     </main>
     <!--if the error is true make it errorBorder else make add emtpy string I think-->
     <div class={"enterTodo " + (error ? "errorBorder" : "")}>
+        <!--since it is double binding for the currTodo when you set the value of it in the editTodo it appears in the input tag-->
         <input bind:value={currTodo} type="text" placeholder="Enter todo"/>
         <button on:click={addTodo}>ADD</button>
     </div>
